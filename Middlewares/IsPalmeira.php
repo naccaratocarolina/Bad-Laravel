@@ -5,9 +5,9 @@ require_once "Middlewares/Middleware.php";
 class IsPalmeira implements Middleware{
 
     public function handle(\Request $request,\Handler $next){
-        if($request->name === "palmeira"){
+        if($request->name === "Palmeira"){
             $next($request);
-        }else {
+        } else {
             ob_get_clean();
             http_response_code(500);
             echo("Não é o Palmeira");

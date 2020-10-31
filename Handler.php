@@ -16,8 +16,10 @@ class Handler{
         $function = $this->middlewares[$this->position]; 
         if(isset($function)){
             $this->position++;
+            //var_dump($function);
             call_user_func(["Middleware\\".$function,"handle"],$request,$this);
         }else{
+            //var_dump($this->controllerMethod);
             call_user_func($this->controllerMethod,$request);
         };
     }

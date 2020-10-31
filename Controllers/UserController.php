@@ -3,7 +3,10 @@ namespace Controllers;
 require_once "DB.php";
 require_once "Request.php";
 require_once "Models/User.php";
+require_once "Models/Auth.php";
 require_once "JsonResponse.php";
+
+use Models\Auth;
 use Models\User;
 use Request;
 use JsonResponse;
@@ -16,12 +19,10 @@ class UserController{
         response($users,200,$headers)->send();
     }
 
-    static public function show(Request $request){
-        //echo 'sadasd';
-        $user = User::find($request->id);
-        //header("Content-type: application/json");
+    static public function show(Request $request) {
+        $user = User::find($request);
         $headers = ["Accept" => "application/json"];
-        response($user,200,$headers)->send();
+        response(["user" => $user],200,$headers)->send();
     }
 
     static public function update(Request $request){
@@ -33,7 +34,6 @@ class UserController{
     }
 
     static public function delete(Request $request){
-
         $deleted = User::delete($request);
         //header("Content-type: application/json");
         $headers = ["Accept" => "application/json"];
@@ -45,8 +45,27 @@ class UserController{
         //header("Content-type: application/json");
         $headers = ["Accept" => "application/json"];
         response($user,201,$headers)->send();
-        
     }
-    
-  
+
+    static public function register(Request $request) {
+        $user = User::create($request);
+        $headers = ["Accept" => "application/json"];
+        if (isset($user)) {
+            response(["success" => "Usuário registrado com sucesso!"], 201, $headers)->send();
+        } else {
+            response(["err" => "Algo deu errado!"], 201, $headers)->send();
+        }
+    }
+
+    static public function login(Request $request) {
+        $user = User::find($request);
+        $headers = ["Accept" => "application/json"];
+        if (Auth::attempt($request)) {
+            $token = $user->createToken();
+            response(["token" => $token, "success" => "Usuário logado com sucesso!"], 201, $headers)->send();
+        }
+        else {
+            response(["err" => "Algo deu errado!"], 401, $headers)->send();
+        }
+    }
 } 

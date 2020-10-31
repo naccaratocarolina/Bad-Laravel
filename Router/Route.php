@@ -1,17 +1,20 @@
 <?php
 namespace Router;
 require_once 'Controllers/UserController.php';
+require_once 'Controllers/BookController.php';
 require_once 'Request.php';
 require_once 'Middlewares/IsPalmeira.php';
+require_once 'Middlewares/AuthMiddleware.php';
 require_once 'Handler.php';
 require_once "Middlewares/CORS.php";
 
 use Controllers\UserController;
+use Controllers\BookController;
 
 class Route{
     private static $get_routes = [];
     private static $post_routes = [];
-    private static $middlewares = ["CORS"];//,"IsPalmeira"];
+    private static $middlewares = ["CORS"];//, "AuthMiddleware", "IsPalmeira"];
 
     static public function get(string $url,string $controllerMethod){
         self::$get_routes[$url] = $controllerMethod;
@@ -33,7 +36,7 @@ class Route{
                 }
                 $function = explode("@",self::$get_routes[$path]);
                 $request = new \Request($_GET);
-                $handler = new \Handler(self::$middlewares,$function);
+                $handler = new \Handler(self::$middlewares, $function);
                 $handler($request);
                 break;
             case "POST":
