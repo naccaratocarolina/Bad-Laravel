@@ -6,7 +6,7 @@ class DB{
     private function __construct()
     {
         try{
-            self::$pdo = new PDO("mysql:host=127.0.0.1;port=3306;dbname=PSI", "root", "");
+            self::$pdo = new PDO("mysql:host=127.0.0.1;port=3306;dbname=PSI", "root", "22765462");
             self::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }catch(PDOException $e){
             echo $e->getMessage();

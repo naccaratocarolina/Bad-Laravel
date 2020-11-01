@@ -9,12 +9,16 @@ use Models\User;
 
 class Auth {
     /**
-     * Retorna o usuario autenticado, decodificando o usuario guardado na payload do token.
+     * Retorna o usuario autenticado, acessando o token guardado na header de
+     * autenticadao e decodificando o usuario guardado na payload do token.
      *
      * @param $token
      * @return mixed
      */
-    public function user($token) {
+    public function user() {
+        $headers = apache_request_headers();
+        $authHeader = $headers['Authorization'];
+        $token = explode(" ", $authHeader)[1];
         $payload = base64_decode(explode(".", $token)[1]);
         return json_decode($payload)->sub;
     }

@@ -4,10 +4,10 @@
     <list default="true" id="5ab64307-c2d9-4346-9cb7-4587249779ea" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Middlewares/AuthMiddleware.php" beforeDir="false" afterPath="$PROJECT_DIR$/Middlewares/AuthMiddleware.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DB.php" beforeDir="false" afterPath="$PROJECT_DIR$/DB.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Models/Auth.php" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Auth.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/Book.php" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Book.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/Models/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Router/Route.php" beforeDir="false" afterPath="$PROJECT_DIR$/Router/Route.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,7 +59,7 @@
       <workItem from="1604087727240" duration="13693000" />
       <workItem from="1604105197567" duration="1781000" />
       <workItem from="1604163321585" duration="9375000" />
-      <workItem from="1604186707152" duration="3039000" />
+      <workItem from="1604186707152" duration="4367000" />
     </task>
     <servers />
   </component>
@@ -67,11 +67,11 @@
     <option name="version" value="3" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="2675" y="448" width="399" height="149" key="NewPhpFileDialog" timestamp="1604163485750">
+    <state x="2675" y="448" width="399" height="149" key="NewPhpFileDialog" timestamp="1604190103796">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
     <state x="755" y="464" width="399" height="149" key="NewPhpFileDialog/1920.0.1920.1080/0.27.1920.1053@0.27.1920.1053" timestamp="1604059856256" />
-    <state x="2675" y="448" width="399" height="149" key="NewPhpFileDialog/1920.0.1920.1080/0.27.1920.1053@1920.0.1920.1080" timestamp="1604163485750" />
+    <state x="2675" y="448" width="399" height="149" key="NewPhpFileDialog/1920.0.1920.1080/0.27.1920.1053@1920.0.1920.1080" timestamp="1604190103796" />
     <state x="2577" y="253" key="run.anything.popup" timestamp="1604177368254">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>

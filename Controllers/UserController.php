@@ -67,36 +67,4 @@ class UserController{
         $headers = ["Accept" => "application/json"];
         response($deleted,200,$headers)->send();
     }
-
-    /**
-     * Registra um novo usuário na plataforma.
-     *
-     * @param Request $request
-     */
-    static public function register(Request $request) {
-        $user = User::create($request);
-        $headers = ["Accept" => "application/json"];
-        if (isset($user)) {
-            response(["success" => "Usuário registrado com sucesso!"], 201, $headers)->send();
-        } else {
-            response(["err" => "Algo deu errado!"], 201, $headers)->send();
-        }
-    }
-
-    /**
-     * Loga um usuário já existente na plataforma, gerando um JWT.
-     *
-     * @param Request $request
-     */
-    static public function login(Request $request) {
-        $user = User::find($request);
-        $headers = ["Accept" => "application/json"];
-        if (Auth::attempt($request)) {
-            $token = $user->createToken();
-            response(["token" => $token, "success" => "Usuário logado com sucesso!"], 201, $headers)->send();
-        }
-        else {
-            response(["err" => "Algo deu errado!"], 401, $headers)->send();
-        }
-    }
 } 

@@ -2,19 +2,21 @@
 namespace Router;
 require_once 'Controllers/UserController.php';
 require_once 'Controllers/BookController.php';
+require_once 'Controllers/AuthController.php';
 require_once 'Request.php';
 require_once 'Middlewares/IsPalmeira.php';
 require_once 'Middlewares/AuthMiddleware.php';
 require_once 'Handler.php';
 require_once "Middlewares/CORS.php";
 
+use Controllers\AuthController;
 use Controllers\UserController;
 use Controllers\BookController;
 
 class Route{
     private static $get_routes = [];
     private static $post_routes = [];
-    private static $middlewares = ["CORS"];//, "AuthMiddleware", "IsPalmeira"];
+    private static $middlewares = ["AuthMiddleware"];//, "AuthMiddleware", "IsPalmeira"];
 
     static public function get(string $url,string $controllerMethod){
         self::$get_routes[$url] = $controllerMethod;

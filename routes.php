@@ -9,8 +9,10 @@ Route::post("/upuser","Controllers\UserController@update");
 Route::post("/cuser","Controllers\UserController@create");
 Route::post("/duser","Controllers\UserController@delete");
 
-Route::post("/login","Controllers\UserController@login");
-Route::post("/register","Controllers\UserController@register");
+// Atentication Controller
+Route::get("/getDetails","Controllers\AuthController@getDetails");
+Route::post("/login","Controllers\AuthController@login");
+Route::post("/register","Controllers\AuthController@register");
 
 // Book Controller
 Route::get("/book","Controllers\BookController@index");
