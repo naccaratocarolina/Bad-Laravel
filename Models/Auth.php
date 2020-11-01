@@ -8,18 +8,38 @@ use Request;
 use Models\User;
 
 class Auth {
-
+    /**
+     * Retorna o usuario autenticado, decodificando o usuario guardado na payload do token.
+     *
+     * @param $token
+     * @return mixed
+     */
     public function user($token) {
         $payload = base64_decode(explode(".", $token)[1]);
         return json_decode($payload)->sub;
     }
 
+    /**
+     * Funcao que pega o email e password passados no request e verifica duas coisas:
+     * Se existe um usuário registrado com esse email e se a senha digitada bate com
+     * a senha armazenada no banco de dados desse usuário.
+     *
+     * @param $request
+     * @return bool
+     */
     public function attempt($request):bool {
         $user = User::find($request);
         if (isset($user) && $user->verifyPassword($request->password, $user->hash)) return true;
         return false;
     }
 
+    /**
+     * Funcao que verifica a autenticidade de um token.
+     *
+     * @param $token
+     * @param string $secret
+     * @return bool
+     */
     public function verifyToken($token, $secret = 'NdRgUkXp2s5v8x/A?D(G+KbPeShVmYq3'):bool {
         // Acessa os tres elementos do token (Header, Payload e Signature)
         $tokenElements = explode(".", $token);
@@ -40,12 +60,9 @@ class Auth {
         $isValid = ($signature === $digitalSignatureEncoded);
 
         // Se o token ja tiver expirado, ou a assinatura digital nao for confirmada, retorna falso
-        if ($isExpired || !$isValid) {
-            return false;
-        }
+        if ($isExpired || !$isValid) return false;
+
         // Retorna true caso contrario
-        else {
-            return true;
-        }
+        else return true;
     }
 }

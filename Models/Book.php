@@ -13,6 +13,11 @@ class Book {
         unset($this->password);
     }
 
+    /**
+     * Retorna todos os livros registrados na plataforma, com a informacao dos seus respectivos autores.
+     *
+     * @return array
+     */
     static public function all():array {
         $pdo = \DB::connect();
         $stm = $pdo->prepare("SELECT b.ISBN, b.title, b.email, a.name, a.surname, b.aid FROM books AS b INNER JOIN authors AS a ON b.aid = a.aid");
@@ -21,6 +26,12 @@ class Book {
         return $books;
     }
 
+    /**
+     * Encontra um livro em funcao da sua chave primária (ISBN). Retorna o dado livro com a informacao do seu autor.
+     *
+     * @param $ISBN
+     * @return Book
+     */
     static public function find($ISBN):Book {
         $pdo = \DB::connect();
         $stm = $pdo->prepare("SELECT b.ISBN, b.title, b.email, a.name, a.surname, b.aid FROM books AS b INNER JOIN authors AS a ON b.aid = a.aid WHERE ISBN=?");
@@ -31,6 +42,12 @@ class Book {
         return $book;
     }
 
+    /**
+     * Cria uma nova instancia livro com as informacoes dadas no request.
+     *
+     * @param \Request $request
+     * @return Book
+     */
     static public function create(\Request $request):Book {
         $pdo = \DB::connect();
         $stm = $pdo->prepare("INSERT INTO books (`ISBN`,`title`,`email`,`password`, `aid`) VALUES (?, ?, ?, ?, ?)");
@@ -39,6 +56,12 @@ class Book {
         return self::find($request->ISBN);
     }
 
+    /**
+     * Atualiza um livro já existente no banco de dados.
+     *
+     * @param \Request $request
+     * @return Book
+     */
     static public function update (\Request $request) {
         $pdo = \DB::connect();
         $query = "UPDATE books SET "; // vamos definir quais colunas atualizar em funcao do request
@@ -72,6 +95,12 @@ class Book {
         return self::find($request->ISBN);
     }
 
+    /**
+     * Deleta um livro do banco de dados.
+     *
+     * @param \Request $request
+     * @return int
+     */
     static public function delete(\Request $request):int {
         $pdo = \DB::connect();
         $stm = $pdo->prepare("DELETE FROM books WHERE ISBN=?");
