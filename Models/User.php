@@ -9,7 +9,6 @@ class User{
     public int $id;
     public string $name;
     public string $email;
-    private string $secretKey = "NdRgUkXp2s5v8x/A?D(G+KbPeShVmYq3";
     private string $password;
     public string $hash;
 
