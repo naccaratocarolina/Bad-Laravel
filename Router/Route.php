@@ -16,7 +16,7 @@ use Controllers\BookController;
 class Route{
     private static $get_routes = [];
     private static $post_routes = [];
-    private static $middlewares = ["AuthMiddleware"];//, "AuthMiddleware", "IsPalmeira"];
+    private static $middlewares = ["CORS"];//, "AuthMiddleware", "IsPalmeira"];
 
     static public function get(string $url,string $controllerMethod){
         self::$get_routes[$url] = $controllerMethod;
