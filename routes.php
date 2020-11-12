@@ -10,13 +10,13 @@ Route::post("/cuser","Controllers\UserController@create");
 Route::post("/duser","Controllers\UserController@delete");
 
 // Atentication Controller
-Route::get("/getDetails","Controllers\AuthController@getDetails");
+Route::get("/getDetails","Controllers\AuthController@getDetails", ["AuthMiddleware"]);
 Route::post("/login","Controllers\AuthController@login");
 Route::post("/register","Controllers\AuthController@register");
 
 // Book Controller
 Route::get("/book","Controllers\BookController@index");
 Route::get("/showbook","Controllers\BookController@show");
-Route::post("/createbook","Controllers\BookController@create");
-Route::post("/updatebook","Controllers\BookController@update");
-Route::post("/deletebook","Controllers\BookController@delete");
+Route::post("/createbook","Controllers\BookController@create", ["AuthMiddleware"]);
+Route::post("/updatebook","Controllers\BookController@update", ["AuthMiddleware"]);
+Route::post("/deletebook","Controllers\BookController@delete", ["AuthMiddleware"]);
