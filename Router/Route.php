@@ -9,36 +9,41 @@ require_once 'Middlewares/AuthMiddleware.php';
 require_once 'Handler.php';
 require_once "Middlewares/CORS.php";
 
-use Controllers\AuthController;
-use Controllers\UserController;
-use Controllers\BookController;
-
 class Route{
     private static $get_routes = [];
     private static $post_routes = [];
     private static $middlewares = ["CORS"];//, "AuthMiddleware", "IsPalmeira"];
 
-    static public function get(string $url,string $controllerMethod){
-        self::$get_routes[$url] = $controllerMethod;
+    static public function get(string $url, string $controllerMethod, array $middlewares = []){
+        self::$get_routes[$url] = ["controllerMethod" => $controllerMethod, "middlewares" => $middlewares];
     }
     
-    static public function post(string $url,string $controllerMethod){
-        self::$post_routes[$url] = $controllerMethod;
+    static public function post(string $url, string $controllerMethod, array $middlewares = []) {
+        self::$post_routes[$url] = ["controllerMethod" => $controllerMethod, "middlewares" => $middlewares];
     }
 
     static public function handle(){
         $url = $_SERVER["REQUEST_URI"];
         $path = parse_url($url, PHP_URL_PATH);
-        switch($_SERVER["REQUEST_METHOD"]){
+        switch($_SERVER["REQUEST_METHOD"]) {
             case "GET":
                 if(!isset(self::$get_routes[$path])){
                     http_response_code(404);
                     echo 'NOT FOUND';
                     die();    
                 }
-                $function = explode("@",self::$get_routes[$path]);
+                $function = explode("@",self::$get_routes[$path]["controllerMethod"]);
                 $request = new \Request($_GET);
-                $handler = new \Handler(self::$middlewares, $function);
+
+                // Aplica as route middlewares, caso elas existam na chamada da rota
+                $routeMiddlewares = self::$middlewares;
+                if(isset(self::$get_routes[$path]["middlewares"])) {
+                    foreach (self::$get_routes[$path]["middlewares"] as $middleware) {
+                        array_push($routeMiddlewares, $middleware);
+                    }
+                }
+
+                $handler = new \Handler($routeMiddlewares, $function);
                 $handler($request);
                 break;
             case "POST":
@@ -47,9 +52,18 @@ class Route{
                     echo 'NOT FOUND';
                     die();    
                 }
-                $function = explode("@",self::$post_routes[$path]);
+                $function = explode("@",self::$post_routes[$path]["controllerMethod"]);
                 $request = new \Request($_POST);
-                $handler = new \Handler(self::$middlewares,$function);
+
+                // Aplica as route middlewares, caso elas existam na chamada da rota
+                $routeMiddlewares = self::$middlewares;
+                if(isset(self::$post_routes[$path]["middlewares"])) {
+                    foreach (self::$post_routes[$path]["middlewares"] as $middleware) {
+                        array_push($routeMiddlewares, $middleware);
+                    }
+                }
+
+                $handler = new \Handler($routeMiddlewares,$function);
                 $handler($request);
                 break;
             case "OPTIONS":
